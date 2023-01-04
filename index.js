@@ -99,16 +99,9 @@ app.post('/api/notes', (req, res) => {
 })
 
 app.put('/api/notes/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const note = notes.find(el => el.id === id)
-  console.log(note)
+  const note = req.body
   if (!note) return res.status(404).json({ message: 'Not found note' })
-
-  const newNotes = notes.map(el => {
-    el.id === id ? (el.important = !el.important) : el
-  })
-  console.log(newNotes)
-  res.json(newNotes)
+  res.json(note)
 })
 
 app.use(midel)
