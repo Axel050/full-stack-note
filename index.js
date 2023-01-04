@@ -1,6 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
+const allowCors = require('allowCors')
 
 let notes = [
   {
@@ -37,6 +38,7 @@ const midel = (req, res) => {
 const app = express()
 app.use(express.static('build'))
 app.use(cors())
+app.use(allowCors())
 app.use(express.json())
 
 morgan.token('body', (req, res) => JSON.stringify(req.body))
