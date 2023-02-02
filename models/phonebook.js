@@ -1,16 +1,16 @@
 const mongoose = require('mongoose')
-
-const url = process.env.MONGODB_URI
-
-mongoose.set('strictQuery', true)
-mongoose
-  .connect(url)
-  .then(res => console.log('connectd to MongoDB'))
-  .catch(err => console.log('error connecting to MongoDB : ' + err.message))
+const uniqueValidator = require('mongoose-unique-validator')
 
 const contactSchema = new mongoose.Schema({
-  name: String,
-  number: String
+  name: {
+    type: String,
+    unique: true,
+    minlength: 3
+  },
+  number: {
+    type: String,
+    minlength: 8
+  }
 })
 
 contactSchema.set('toJSON', {
@@ -20,5 +20,7 @@ contactSchema.set('toJSON', {
     delete returnedObject.__v
   }
 })
+
+contactSchema.plugin(uniqueValidator)
 
 module.exports = mongoose.model('Contact', contactSchema)
